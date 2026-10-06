@@ -7,6 +7,7 @@ from pydantic import BaseModel
 import joblib
 import numpy as np
 import uvicorn
+import csv
 
 # Initialize FastAPI app
 app = FastAPI(title="Water Contamination Risk Prediction API",
@@ -107,9 +108,6 @@ async def health_check():
 async def get_latest_data():
     """Get the latest data entry from the dataset for populating form fields"""
     try:
-        # Load the dataset
-        df = pd.read_csv("final_merged_dataset.csv")
-
         # Feature columns (same as training)
         X_cols = [
             'Average Water Speed',
@@ -131,19 +129,33 @@ async def get_latest_data():
             'Turbidity_delta_3h'
         ]
 
-        # Take latest row
-        latest_data = df[X_cols].tail(1)
+        # Read the CSV file and get the latest row
+        latest_row = None
+        latest_timestamp = None
 
-        # Convert to dictionary with proper field names for frontend
+        with open("final_merged_dataset.csv", 'r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                latest_row = row
+                if 'Timestamp' in row:
+                    latest_timestamp = row['Timestamp']
+
+        if latest_row is None:
+            raise HTTPException(status_code=404, detail="No data found in dataset")
+
+        # Extract the required features and convert to frontend field names
         result = {}
         for col in X_cols:
-            # Convert column name to frontend field name (snake_case)
-            frontend_field = col.lower().replace(' ', '_').replace('(%', '_').replace('%)', '').replace('.', '_')
-            result[frontend_field] = float(latest_data[col].iloc[0])
+            if col in latest_row:
+                # Convert column name to frontend field name (snake_case)
+                frontend_field = col.lower().replace(' ', '_').replace('(%', '_').replace('%)', '').replace('.', '_')
+                result[frontend_field] = float(latest_row[col])
+            else:
+                raise HTTPException(status_code=500, detail=f"Missing column: {col}")
 
         # Also include the timestamp if available
-        if 'Timestamp' in df.columns:
-            result['timestamp'] = str(df['Timestamp'].iloc[-1])
+        if latest_timestamp:
+            result['timestamp'] = latest_timestamp
 
         return {
             "data": result,
