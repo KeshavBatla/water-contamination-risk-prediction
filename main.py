@@ -103,6 +103,55 @@ async def health_check():
     except Exception as e:
         raise HTTPException(status_code=503, detail=f"Model loading failed: {str(e)}")
 
+@app.get("/api/latest-data")
+async def get_latest_data():
+    """Get the latest data entry from the dataset for populating form fields"""
+    try:
+        # Load the dataset
+        df = pd.read_csv("final_merged_dataset.csv")
+
+        # Feature columns (same as training)
+        X_cols = [
+            'Average Water Speed',
+            'Average Water Direction',
+            'Chlorophyll',
+            'Temperature',
+            'Dissolved Oxygen',
+            'Dissolved Oxygen (%Saturation)',
+            'pH',
+            'Salinity',
+            'Specific Conductance',
+            'Turbidity',
+            'Turbidity_max',
+            'Rainfall (mm)',
+            'Air Temperature (degC)',
+            'Relative Humidity (%)',
+            'Wind Speed (m/s)',
+            'Rainfall_6H',
+            'Turbidity_delta_3h'
+        ]
+
+        # Take latest row
+        latest_data = df[X_cols].tail(1)
+
+        # Convert to dictionary with proper field names for frontend
+        result = {}
+        for col in X_cols:
+            # Convert column name to frontend field name (snake_case)
+            frontend_field = col.lower().replace(' ', '_').replace('(%', '_').replace('%)', '').replace('.', '_')
+            result[frontend_field] = float(latest_data[col].iloc[0])
+
+        # Also include the timestamp if available
+        if 'Timestamp' in df.columns:
+            result['timestamp'] = str(df['Timestamp'].iloc[-1])
+
+        return {
+            "data": result,
+            "message": "Latest dataset entry retrieved successfully"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve latest data: {str(e)}")
+
 @app.post("/api/predict")
 async def predict_risk(features: WaterFeatures):
     """

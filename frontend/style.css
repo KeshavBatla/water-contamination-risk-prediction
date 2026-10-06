@@ -197,6 +197,57 @@ main {
     display: none;
 }
 
+/* Data Controls */
+.data-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+}
+
+.secondary-button {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+
+.secondary-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.data-info {
+    font-size: 0.9rem;
+    color: #666;
+    flex-grow: 1;
+}
+
+.scenario-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.scenario-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .container {
@@ -222,6 +273,38 @@ main {
     .predict-button {
         padding: 12px 25px;
         font-size: 1.1rem;
+    }
+
+    .data-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .secondary-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+
+    .result-section {
+        padding: 20px;
+    }
+
+    #riskDisplay {
+        font-size: 2rem;
+    }
+
+    #probabilityDisplay {
+        font-size: 1.5rem;
     }
 }
 

@@ -13,6 +13,22 @@
             <p>Predict the likelihood of water contamination in the next 3 hours based on sensor readings</p>
         </header>
 
+        <!-- Data Source Controls -->
+        <div class="data-controls">
+            <button type="button" id="useLatestDataBtn" class="secondary-button">
+                Use Latest Dataset Entry
+            </button>
+            <div id="dataInfo" class="data-info hidden">
+                <small>Using data from: <span id="dataTimestamp"></span></small>
+            </div>
+
+            <!-- Risk Scenario Control -->
+            <label class="scenario-label">
+                <input type="checkbox" id="riskScenarioCheckbox">
+                Show High-Risk Scenario
+            </label>
+        </div>
+
         <main>
             <form id="predictionForm">
                 <section class="input-section">
