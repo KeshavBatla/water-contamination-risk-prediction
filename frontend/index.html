@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Contamination Risk Predictor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌊 Water Contamination Risk Predictor</h1>
+            <p>Predict the likelihood of water contamination in the next 3 hours based on sensor readings</p>
+        </header>
+
+        <main>
+            <form id="predictionForm">
+                <section class="input-section">
+                    <h2>Sensor Inputs</h2>
+                    <div class="input-grid">
+                        <!-- Water Properties -->
+                        <div class="input-group">
+                            <label for="avg_water_speed">Average Water Speed (m/s)</label>
+                            <input type="number" id="avg_water_speed" name="avg_water_speed" step="0.001" placeholder="Enter water speed" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="avg_water_direction">Average Water Direction (°)</label>
+                            <input type="number" id="avg_water_direction" name="avg_water_direction" step="0.001" placeholder="Enter water direction" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="chlorophyll">Chlorophyll (µg/L)</label>
+                            <input type="number" id="chlorophyll" name="chlorophyll" step="0.001" placeholder="Enter chlorophyll level" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="temperature">Temperature (°C)</label>
+                            <input type="number" id="temperature" name="temperature" step="0.001" placeholder="Enter temperature" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="dissolved_oxygen">Dissolved Oxygen (mg/L)</label>
+                            <input type="number" id="dissolved_oxygen" name="dissolved_oxygen" step="0.001" placeholder="Enter dissolved oxygen" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="dissolved_oxygen_sat">Dissolved Oxygen (%Saturation)</label>
+                            <input type="number" id="dissolved_oxygen_sat" name="dissolved_oxygen_sat" step="0.001" placeholder="Enter DO saturation" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="ph">pH</label>
+                            <input type="number" id="ph" name="ph" step="0.001" placeholder="Enter pH value" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="salinity">Salinity (PSU)</label>
+                            <input type="number" id="salinity" name="salinity" step="0.001" placeholder="Enter salinity" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="specific_conductance">Specific Conductance (µS/cm)</label>
+                            <input type="number" id="specific_conductance" name="specific_conductance" step="0.001" placeholder="Enter specific conductance" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="turbidity">Turbidity (NTU)</label>
+                            <input type="number" id="turbidity" name="turbidity" step="0.001" placeholder="Enter turbidity" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="turbidity_max">Turbidity Max (NTU)</label>
+                            <input type="number" id="turbidity_max" name="turbidity_max" step="0.001" placeholder="Enter max turbidity" required>
+                        </div>
+
+                        <!-- Weather Properties -->
+                        <div class="input-group">
+                            <label for="rainfall">Rainfall (mm)</label>
+                            <input type="number" id="rainfall" name="rainfall" step="0.001" placeholder="Enter rainfall" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="air_temp">Air Temperature (°C)</label>
+                            <input type="number" id="air_temp" name="air_temp" step="0.001" placeholder="Enter air temperature" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="relative_humidity">Relative Humidity (%)</label>
+                            <input type="number" id="relative_humidity" name="relative_humidity" step="0.001" placeholder="Enter humidity" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="wind_speed">Wind Speed (m/s)</label>
+                            <input type="number" id="wind_speed" name="wind_speed" step="0.001" placeholder="Enter wind speed" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="rainfall_6h">Rainfall 6H (mm)</label>
+                            <input type="number" id="rainfall_6h" name="rainfall_6h" step="0.001" placeholder="Enter 6-hour rainfall" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="turbidity_delta_3h">Turbidity Delta 3H</label>
+                            <input type="number" id="turbidity_delta_3h" name="turbidity_delta_3h" step="0.001" placeholder="Enter turbidity delta" required>
+                        </div>
+                    </div>
+                </section>
+
+                <button type="submit" id="predictBtn" class="predict-button">
+                    Predict Contamination Risk
+                </button>
+            </form>
+        </main>
+
+        <section id="resultSection" class="result-section hidden">
+            <h2>Prediction Result</h2>
+            <div id="resultContent">
+                <div id="riskDisplay"></div>
+                <div id="probabilityDisplay"></div>
+                <div id="messageDisplay"></div>
+            </div>
+        </section>
+
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="loading-spinner"></div>
+            <p>Analyzing water quality data...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

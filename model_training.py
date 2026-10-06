@@ -37,7 +37,6 @@ df_hourly = pd.concat([numeric_hourly, quality_hourly], axis=1) #new dataframe
 
 turbidity_max  = df['Turbidity'].resample('1h').max()
 
-df_hourly['Turbidity_max']  = turbidity_max
 
 df1['Timestamp']=pd.to_datetime(df1['Date']+" "+df1['Time'], dayfirst=True) #if date has day first then converts into mm/dd/yy
 df1=df1.set_index('Timestamp')

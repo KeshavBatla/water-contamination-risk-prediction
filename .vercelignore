@@ -1,0 +1,48 @@
+# Ignore Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+venv
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis
+.pytest_cache
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore model training files (keep for reference but not needed for runtime)
+model_training.py
+brisbane_water_quality.csv
+brisbanecbd-aq-2023.csv
+brisbanecbd-aq-2024.csv
+final_merged_dataset.csv
+
+# Ignore old Streamlit app
+app.py
+
+# Ignore Jupyter notebooks if any
+*.ipynb
+
+# Ignore VS Code settings
+.vscode/
